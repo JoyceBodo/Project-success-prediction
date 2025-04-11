@@ -65,5 +65,5 @@ if uploaded_file:
     with col1:
         st.write("Project Status Distribution")
         if 'implementation_status' in df.columns:
-            st.bar_chart(df['implementation_status'].
+            st.bar_chart(df['implementation_status'].)
 
