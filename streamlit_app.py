@@ -12,7 +12,7 @@ sector_encoder = joblib.load("mtef_sector_encoder.pkl")
 agency_encoder = joblib.load("implementing_agency_encoder.pkl")
 
 st.set_page_config(page_title="Donor Project Success Predictor", layout="wide")
-st.title("Donor-Funded Project Success Predictor in Kenya")
+st.title("🎯 Donor-Funded Project Success Predictor in Kenya")
 
 # File upload
 uploaded_file = st.file_uploader("Upload your donor project dataset (CSV)", type="csv")
@@ -30,7 +30,7 @@ if uploaded_file:
     st.write(df.head())
 
     # Predict section
-    st.subheader("Make a Prediction")
+    st.subheader("📊 Make a Prediction")
 
     cost = st.number_input("Total Project Cost (KES)", min_value=0)
     duration = st.number_input("Project Duration (Months)", min_value=0)
@@ -65,5 +65,11 @@ if uploaded_file:
     with col1:
         st.write("Project Status Distribution")
         if 'implementation_status' in df.columns:
-            st.bar_chart(df['implementation_status'].)
+            st.bar_chart(df['implementation_status'].value_counts())
+
+    with col2:
+        st.write("Top 10 Sectors by Avg. Cost")
+        if 'mtef_sector' in df.columns:
+            avg_cost = df.groupby('mtef_sector')['total_project_cost_(kes)'].mean().dropna().sort_values(ascending=False).head(10)
+            st.bar_chart(avg_cost)
 
